@@ -8,6 +8,7 @@ public class CameraFollow : MonoBehaviour
     private Vector3 offset;
     
     private Transform _target;
+    
     // Start is called before the first frame update
     void Start()
     {

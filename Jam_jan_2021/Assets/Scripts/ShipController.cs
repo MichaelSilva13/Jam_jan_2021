@@ -7,61 +7,40 @@ public class ShipController : MonoBehaviour
 {
     private Rigidbody rb;
 
-    public float maxVelocity = 3f;
+    public float maxVelocity = 45f;
 
     public float rotationSpeed = 3f;
 
-    public float accel = 3f;
+    public float accel = 30f;
 
-    private ShootingController _shootingController;
-
+    protected ShootingController ShootingController;
+    
+    public int bulletDamage;
+    
     private RespawnController _respawnController;
 
-    [SerializeField]
-    private GameObject bullet, bomb;
-    
-    [SerializeField]
-    private float bulletCooldownTime = 0.5f, bulletSpeed = 10f, bombCooldownTime = 2.5f, bombSpeed = 15f;
-    private bool fireCooldown, bombFireCooldown;
+    public float bulletCooldownTime = 0.15f, bulletSpeed = 75f, bombCooldownTime = 5f, bombSpeed = 75f;
+    protected bool FireCooldown, BombFireCooldown;
 
     [SerializeField]
-    private string bulletKey = "PlayerBullet", bombKey = "PlayerBomb";
+    protected string bulletKey = "Bullet", bombKey = "Bomb";
+
+    protected Experience Experience;
+
+    private Health _health;
 
     // Start is called before the first frame update
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        _shootingController = GetComponent<ShootingController>();
+        ShootingController = GetComponent<ShootingController>();
         _respawnController = GetComponent<RespawnController>();
-        GameObjectPoolController.AddEntry(bulletKey, bullet, 10, 20);
-        GameObjectPoolController.AddEntry(bombKey, bomb, 10, 20);
-    }
-
-    private void FixedUpdate()
-    {
-        float zAxis = Input.GetAxis("Vertical");
-        float xAxis = Input.GetAxis("Horizontal");
-
-        ThrustForward(zAxis);
-        Rotate(transform, xAxis * rotationSpeed);
-        ClampVelocity();
-    }
-
-    private void LateUpdate()
-    {
-        if (Input.GetButtonDown("Fire1") && !fireCooldown)
-        {
-            _shootingController.Shoot(bulletKey, bulletSpeed, BulletCooldown());
-        }
-        
-        if (Input.GetButtonDown("Fire2") && !bombFireCooldown)
-        {
-            _shootingController.Shoot(bombKey, bombSpeed, BombCooldown());
-        }
+        _health = GetComponent<Health>();
+        Experience = GetComponent<Experience>();
     }
 
 
-    private void ClampVelocity()
+    protected void ClampVelocity()
     {
         float x = Mathf.Clamp(rb.velocity.x, -maxVelocity, maxVelocity);
         float z = Mathf.Clamp(rb.velocity.z, -maxVelocity, maxVelocity);
@@ -70,35 +49,38 @@ public class ShipController : MonoBehaviour
 
     }
 
-    private void ThrustForward(float amount)
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!other.CompareTag("Bullet") && !other.CompareTag("Explosion"))
+        {
+            _health.Kill(null);
+        }
+    }
+
+    protected void ThrustForward(float amount)
     {
         Vector3 force = transform.forward * (Mathf.Clamp(amount, 0, 1) * accel);
 
         rb.AddForce(force);
     }
 
-    private void Rotate(Transform t, float amount)
+    protected void Rotate(Transform t, float amount)
     {
         t.Rotate(0, amount, 0);
     }
     
-    IEnumerator BulletCooldown()
+    protected IEnumerator BulletCooldown()
     {
-        fireCooldown = true;
+        FireCooldown = true;
         yield return new WaitForSeconds(bulletCooldownTime);
-        fireCooldown = false;
+        FireCooldown = false;
     }
     
-    IEnumerator BombCooldown()
+    protected IEnumerator BombCooldown()
     {
-        bombFireCooldown = true;
+        BombFireCooldown = true;
         yield return new WaitForSeconds(bombCooldownTime);
-        bombFireCooldown = false;
+        BombFireCooldown = false;
     }
 
-    private void Respawn()
-    {
-        gameObject.transform.position = _respawnController.GetFurthestRespawnBecon(gameObject);
-        rb.velocity = new Vector3(0, 0, 0);
-    }
 }

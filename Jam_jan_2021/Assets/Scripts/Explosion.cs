@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,19 @@ public class Explosion : MonoBehaviour
 {
     public ParticleSystem part;
     private SphereCollider _collider;
+    
+    private Experience user;
+
+    public Experience User
+    {
+        set => user = value;
+    }
+
+    public int Damage
+    {
+        get;
+        set;
+    }
 
     void OnEnable()
     {
@@ -13,6 +27,20 @@ public class Explosion : MonoBehaviour
         if(!_collider)
             _collider = GetComponent<SphereCollider>();
         _collider.enabled = false;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Health otherHealth = other.GetComponent<Health>();
+        if (!otherHealth)
+        {
+            otherHealth = other.GetComponentInParent<Health>();
+        }
+        if (otherHealth)
+        {
+            otherHealth.Damage(Damage, user);
+            user.Xp++;
+        }
     }
 
     public IEnumerator explode()

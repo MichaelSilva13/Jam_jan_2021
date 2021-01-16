@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : Projectile
 {
     [SerializeField]
     private float sdTime = 1f;
@@ -16,6 +16,7 @@ public class Bullet : MonoBehaviour
     private Coroutine SDCoroutine;
     private Rigidbody _rigidbody;
     private MeshRenderer _meshRenderer;
+
     void OnEnable()
     {
         if (!_collider)
@@ -41,6 +42,20 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Health otherHealth = other.GetComponent<Health>();
+        if (!otherHealth)
+        {
+            otherHealth = other.GetComponentInParent<Health>();
+        }
+        if (otherHealth)
+        {
+            otherHealth.Damage(Damage, user);
+            if (otherHealth.Life <= 0)
+            {
+                user.Xp+=5;
+            }
+        }
+        Debug.Log(otherHealth);
         StopCoroutine(SDCoroutine);
         StartCoroutine(Sparks());
     }
