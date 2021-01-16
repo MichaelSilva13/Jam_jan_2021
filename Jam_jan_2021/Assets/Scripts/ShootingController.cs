@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class ShootingController : MonoBehaviour
 {
-
     public void Shoot(string projKey, float speed, IEnumerator routine, int damage, Experience source)
     {
         StartCoroutine(routine);

@@ -12,10 +12,14 @@ public class Bullet : Projectile
     [SerializeField]
     private ParticleSystem _sparkParticle;
 
+    [SerializeField]
+    private AudioSource impactSound;
+
     private ParticleSystem _particle;
     private Coroutine SDCoroutine;
     private Rigidbody _rigidbody;
     private MeshRenderer _meshRenderer;
+    private AudioSource _audioSource;
 
     void OnEnable()
     {
@@ -27,11 +31,14 @@ public class Bullet : Projectile
             _particle = GetComponent<ParticleSystem>();
         if (!_meshRenderer)
             _meshRenderer = GetComponent<MeshRenderer>();
+        if (!_audioSource)
+            _audioSource = GetComponent<AudioSource>();
         
         _particle.Play();
         _sparkParticle.Stop();
         _meshRenderer.enabled = true;
         _collider.enabled = true;
+        _audioSource.Play();
         SDCoroutine = StartCoroutine(SelfDestruct());
     }
 
@@ -62,6 +69,7 @@ public class Bullet : Projectile
 
     IEnumerator Sparks()
     {
+        impactSound.Play();
         _meshRenderer.enabled = false;
         _particle.Stop();
         _rigidbody.velocity = Vector3.zero;

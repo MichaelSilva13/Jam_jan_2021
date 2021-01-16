@@ -8,6 +8,8 @@ public class Health : MonoBehaviour
     [SerializeField] private float blinkTime;
     private int life;
 
+    [SerializeField]
+    private AudioSource _audioSource;
     public bool Dead
     {
         get;
@@ -63,6 +65,7 @@ public class Health : MonoBehaviour
 
     public void Kill(Experience experience)
     {
+        _audioSource.Play();
         if (experience && experience != _experience)
         {
             _experience.LevelUp();

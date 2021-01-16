@@ -6,6 +6,7 @@ using UnityEngine;
 public class ShipController : MonoBehaviour
 {
     private Rigidbody rb;
+    private AudioSource _audioSource;
 
     public float maxVelocity = 45f;
 
@@ -33,6 +34,7 @@ public class ShipController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        _audioSource = GetComponent<AudioSource>();
         ShootingController = GetComponent<ShootingController>();
         _respawnController = GetComponent<RespawnController>();
         Health = GetComponent<Health>();
@@ -46,6 +48,7 @@ public class ShipController : MonoBehaviour
         float z = Mathf.Clamp(rb.velocity.z, -maxVelocity, maxVelocity);
 
         rb.velocity = new Vector3(x, rb.velocity.y, z);
+        _audioSource.volume = (rb.velocity.magnitude / maxVelocity)/2f;
 
     }
 

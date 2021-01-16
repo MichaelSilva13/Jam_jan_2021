@@ -9,6 +9,7 @@ public class Bomb : Projectile
     private float sdTime = 1f, explosionTime;
 
     private bool exploding;
+    private AudioSource _audioSource;
 
     private MeshRenderer _meshRenderer;
     private ParticleSystem explosionParticles;
@@ -39,9 +40,13 @@ public class Bomb : Projectile
             _explosion = GetComponentInChildren<Explosion>();
         }
 
+        if (!_audioSource)
+            _audioSource = GetComponent<AudioSource>();
+
         if (!_collider)
             _collider = GetComponent<Collider>();
 
+        _audioSource.Play();
         _meshRenderer.enabled = true;
         _collider.enabled = true;
         exploding = false;
@@ -79,7 +84,7 @@ public class Bomb : Projectile
     
     IEnumerator SelfDestruct()
     {
-        yield return new WaitForSeconds(sdTime);
+        yield return new WaitForSeconds(explosionTime);
         GameObjectPoolController.Enqueue(GetComponent<Poolable>());
     }
 
