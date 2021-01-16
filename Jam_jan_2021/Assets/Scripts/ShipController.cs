@@ -52,9 +52,6 @@ public class ShipController : MonoBehaviour
         if (Input.GetButtonDown("Fire1") && !fireCooldown)
         {
             _shootingController.Shoot(bulletKey, bulletSpeed, BulletCooldown());
-
-            //REMOVE ME
-            Respawn();
         }
         
         if (Input.GetButtonDown("Fire2") && !bombFireCooldown)
