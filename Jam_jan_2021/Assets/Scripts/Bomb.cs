@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bomb : MonoBehaviour
+public class Bomb : Projectile
 {
     [SerializeField]
     private float sdTime = 1f, explosionTime;
@@ -16,6 +16,7 @@ public class Bomb : MonoBehaviour
     private Explosion _explosion;
     private Coroutine detonateRoutine;
     private Collider _collider;
+
     void OnEnable()
     {
         if (!_meshRenderer)
@@ -70,6 +71,8 @@ public class Bomb : MonoBehaviour
         _rigidbody.velocity = Vector3.zero;
         explosionParticles.Play();
         StartCoroutine(SelfDestruct());
+        _explosion.Damage = Damage;
+        _explosion.User = user;
         StartCoroutine(_explosion.explode());
         //GameObjectPoolController.Enqueue(GetComponent<Poolable>());
     }
