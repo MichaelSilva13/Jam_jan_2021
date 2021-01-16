@@ -8,6 +8,12 @@ public class Health : MonoBehaviour
     [SerializeField] private float blinkTime;
     private int life;
 
+    public bool Dead
+    {
+        get;
+        set;
+    }
+
     private Collider _collider;
     private MeshRenderer _meshRenderer;
     private RespawnController _respawnController;
@@ -45,7 +51,7 @@ public class Health : MonoBehaviour
     {
         life -= value;
         Debug.Log(life);
-        if (life < 0)
+        if (life <= 0)
         {
             Kill(experience);
         }
@@ -63,11 +69,13 @@ public class Health : MonoBehaviour
             experience.Xp += 5;
         }
 
+        Dead = true;
         StartCoroutine(DeathAnim());
     }
 
     void Respawn()
     {
+        Dead = false;
         gameObject.transform.position = _respawnController.GetFurthestRespawnBecon(gameObject);
         life = maxLife;
     }

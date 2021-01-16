@@ -7,8 +7,8 @@ public class PlayerShipController : ShipController
 {
     private void FixedUpdate()
     {
-        float zAxis = Input.GetAxis("Vertical");
-        float xAxis = Input.GetAxis("Horizontal");
+        float zAxis = !Health.Dead ? Input.GetAxis("Vertical") : 0;
+        float xAxis = !Health.Dead ? Input.GetAxis("Horizontal") : 0;
 
         ThrustForward(zAxis);
         Rotate(transform, xAxis * rotationSpeed);
@@ -17,12 +17,12 @@ public class PlayerShipController : ShipController
     
     private void LateUpdate()
     {
-        if (Input.GetButtonDown("Fire1") && !FireCooldown)
+        if (Input.GetButtonDown("Fire1") && !FireCooldown && !Health.Dead)
         {
             ShootingController.Shoot(bulletKey, bulletSpeed, BulletCooldown(), bulletDamage, Experience);
         }
         
-        if (Input.GetButtonDown("Fire2") && !BombFireCooldown)
+        if (Input.GetButtonDown("Fire2") && !BombFireCooldown && !Health.Dead)
         {
             ShootingController.Shoot(bombKey, bombSpeed, BombCooldown(), bulletDamage * 2, Experience);
         }

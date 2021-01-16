@@ -27,7 +27,7 @@ public class ShipController : MonoBehaviour
 
     protected Experience Experience;
 
-    private Health _health;
+    protected Health Health;
 
     // Start is called before the first frame update
     private void Start()
@@ -35,7 +35,7 @@ public class ShipController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         ShootingController = GetComponent<ShootingController>();
         _respawnController = GetComponent<RespawnController>();
-        _health = GetComponent<Health>();
+        Health = GetComponent<Health>();
         Experience = GetComponent<Experience>();
     }
 
@@ -53,7 +53,7 @@ public class ShipController : MonoBehaviour
     {
         if (!other.CompareTag("Bullet") && !other.CompareTag("Explosion"))
         {
-            _health.Kill(null);
+            Health.Kill(null);
         }
     }
 
