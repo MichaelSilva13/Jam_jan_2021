@@ -6,7 +6,10 @@ using UnityEngine;
 public class EnemySpaceshipController : MonoBehaviour
 {
     private bool m_EnemyIsInShootingRange = false;
+    private bool m_FireCooldown;
+    private bool m_BombFireCooldown;
 
+    private ShootingController m_ShootingController;
     private Collider[] m_GameObjsInShootingRange;
     private List<GameObject> m_GameObjsInGame;
     private Rigidbody rb;
@@ -29,20 +32,28 @@ public class EnemySpaceshipController : MonoBehaviour
     [SerializeField]
     float maxVelocity = 3.0f;
 
+    [SerializeField]
+    float bulletCooldownTime = 0.5f;
+
+    [SerializeField]
+    float bulletSpeed = 10.0f;
+
+    [SerializeField]
+    string bulletKey = "PlayerBullet";
+
     // Start is called before the first frame update
     void Start()
     {
-        m_GameObjsInGame = new List<GameObject>();
+        m_GameObjsInGame = new List<GameObject>(GameObject.FindGameObjectsWithTag(enemyTag).ToList());
         m_GameObjsInGame.Add(GameObject.FindGameObjectWithTag("Player"));
 
+        m_ShootingController = GetComponent<ShootingController>();
         rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        AddGameObjectsToList();
-
         if (m_GameObjsInGame == null)
             return;
 
@@ -52,12 +63,12 @@ public class EnemySpaceshipController : MonoBehaviour
 
         if (m_GameObjsInShootingRange.Length == 1)
         {
-            nearestEnemy = MoveTowardsClosestEnemy(m_GameObjsInGame);
+            nearestEnemy = FindClosestEnemy(m_GameObjsInGame);
             m_EnemyIsInShootingRange = false;
         }
         else
         {
-            nearestEnemy = MoveTowardsClosestEnemy(m_GameObjsInShootingRange);
+            nearestEnemy = FindClosestEnemy(m_GameObjsInShootingRange);
             m_EnemyIsInShootingRange = true;
         }
 
@@ -73,32 +84,20 @@ public class EnemySpaceshipController : MonoBehaviour
         ClampVelocity();
 
         if (m_EnemyIsInShootingRange)
+            m_ShootingController.Shoot(bulletKey, bulletSpeed, BulletCooldown());
+
+        if (distance <= playerOffsetSphereRadius)
         {
-            // SHOOT
+            RotateTowardsNearestEnemy(nearestEnemy);
+            rb.drag = 20.0f;
         }
         else
         {
-            // STOP SHOOTING
-        }
-
-        if (distance <= playerOffsetSphereRadius)
-            rb.drag = 20;
-    }
-
-    private void AddGameObjectsToList()
-    {
-        GameObject[] gos = GameObject.FindGameObjectsWithTag(enemyTag);
-
-        for (int i = 0; i < gos.Length; i++)
-        {
-            if (m_GameObjsInGame.Contains(gos[i]))
-                continue;
-
-            m_GameObjsInGame.Add(gos[i]);
+            rb.drag = 0.5f;
         }
     }
 
-    private GameObject MoveTowardsClosestEnemy(object gos)
+    private GameObject FindClosestEnemy(object gos)
     {
         float min = 999999.0f;
         GameObject nearestEnemy = null;
@@ -123,6 +122,9 @@ public class EnemySpaceshipController : MonoBehaviour
         {
             foreach (var go in goList)
             {
+                if (go == gameObject)
+                    continue;
+
                 float distance = (go.transform.position - gameObject.transform.position).magnitude;
 
                 if (distance < min)
@@ -158,5 +160,12 @@ public class EnemySpaceshipController : MonoBehaviour
         float z = Mathf.Clamp(rb.velocity.z, -maxVelocity, maxVelocity);
 
         rb.velocity = new Vector3(x, rb.velocity.y, z);
+    }
+
+    IEnumerator BulletCooldown()
+    {
+        m_FireCooldown = true;
+        yield return new WaitForSeconds(bulletCooldownTime);
+        m_FireCooldown = false;
     }
 }
