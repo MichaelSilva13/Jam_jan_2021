@@ -69,7 +69,7 @@ public class ShipController : MonoBehaviour
 
     private void ThrustForward(float amount)
     {
-        Vector3 force = transform.forward * (amount * accel);
+        Vector3 force = transform.forward * (Mathf.Clamp(amount, 0, 1) * accel);
 
         rb.AddForce(force);
     }
