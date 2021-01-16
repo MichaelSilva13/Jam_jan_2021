@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,14 +7,31 @@ public class ShipController : MonoBehaviour
 {
     private Rigidbody rb;
 
-    public float maxVelocity = 3;
+    public float maxVelocity = 3f;
 
-    public float rotationSpeed = 3;
+    public float rotationSpeed = 3f;
+
+    public float accel = 3f;
+
+    private ShootingController _shootingController;
+    
+    [SerializeField]
+    private GameObject bullet, bomb;
+    
+    [SerializeField]
+    private float bulletCooldownTime = 0.5f, bulletSpeed = 10f, bombCooldownTime = 2.5f, bombSpeed = 15f;
+    private bool fireCooldown, bombFireCooldown;
+
+    [SerializeField]
+    private string bulletKey = "PlayerBullet", bombKey = "PlayerBomb";
 
     // Start is called before the first frame update
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        _shootingController = GetComponent<ShootingController>();
+        GameObjectPoolController.AddEntry(bulletKey, bullet, 10, 20);
+        GameObjectPoolController.AddEntry(bombKey, bomb, 10, 20);
     }
 
     private void FixedUpdate()
@@ -24,6 +42,19 @@ public class ShipController : MonoBehaviour
         ThrustForward(zAxis);
         Rotate(transform, xAxis * rotationSpeed);
         ClampVelocity();
+    }
+
+    private void LateUpdate()
+    {
+        if (Input.GetButtonDown("Fire1") && !fireCooldown)
+        {
+            _shootingController.Shoot(bulletKey, bulletSpeed, BulletCooldown());
+        }
+        
+        if (Input.GetButtonDown("Fire2") && !bombFireCooldown)
+        {
+            _shootingController.Shoot(bombKey, bombSpeed, BombCooldown());
+        }
     }
 
 
@@ -38,7 +69,7 @@ public class ShipController : MonoBehaviour
 
     private void ThrustForward(float amount)
     {
-        Vector3 force = transform.forward * amount;
+        Vector3 force = transform.forward * (amount * accel);
 
         rb.AddForce(force);
     }
@@ -46,5 +77,19 @@ public class ShipController : MonoBehaviour
     private void Rotate(Transform t, float amount)
     {
         t.Rotate(0, amount, 0);
+    }
+    
+    IEnumerator BulletCooldown()
+    {
+        fireCooldown = true;
+        yield return new WaitForSeconds(bulletCooldownTime);
+        fireCooldown = false;
+    }
+    
+    IEnumerator BombCooldown()
+    {
+        bombFireCooldown = true;
+        yield return new WaitForSeconds(bombCooldownTime);
+        bombFireCooldown = false;
     }
 }
