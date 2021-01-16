@@ -12,18 +12,19 @@ public class PlayerShipController : ShipController
 
         ThrustForward(zAxis);
         Rotate(transform, xAxis * rotationSpeed);
+        ClampVelocity();
     }
     
     private void LateUpdate()
     {
-        if (Input.GetButtonDown("Fire1") && !_fireCooldown)
+        if (Input.GetButtonDown("Fire1") && !FireCooldown)
         {
-            _shootingController.Shoot(bulletKey, bulletSpeed, BulletCooldown(), bulletDamage, _experience);
+            ShootingController.Shoot(bulletKey, bulletSpeed, BulletCooldown(), bulletDamage, Experience);
         }
         
-        if (Input.GetButtonDown("Fire2") && !_bombFireCooldown)
+        if (Input.GetButtonDown("Fire2") && !BombFireCooldown)
         {
-            _shootingController.Shoot(bombKey, bombSpeed, BombCooldown(), bulletDamage * 2, _experience);
+            ShootingController.Shoot(bombKey, bombSpeed, BombCooldown(), bulletDamage * 2, Experience);
         }
     }
 }

@@ -7,38 +7,40 @@ public class ShipController : MonoBehaviour
 {
     private Rigidbody rb;
 
-    public float maxVelocity = 3f;
+    public float maxVelocity = 45f;
 
     public float rotationSpeed = 3f;
 
-    public float accel = 3f;
+    public float accel = 30f;
 
-    protected ShootingController _shootingController;
+    protected ShootingController ShootingController;
     
     public int bulletDamage;
     
-    [SerializeField]
-    private GameObject bullet, bomb;
-    
-    
-    public float bulletCooldownTime = 0.5f, bulletSpeed = 75f, bombCooldownTime = 5f, bombSpeed = 75f;
-    protected bool _fireCooldown, _bombFireCooldown;
+    private RespawnController _respawnController;
+
+    public float bulletCooldownTime = 0.15f, bulletSpeed = 75f, bombCooldownTime = 5f, bombSpeed = 75f;
+    protected bool FireCooldown, BombFireCooldown;
 
     [SerializeField]
     protected string bulletKey = "Bullet", bombKey = "Bomb";
 
-    protected Experience _experience;
+    protected Experience Experience;
+
+    private Health _health;
 
     // Start is called before the first frame update
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        _shootingController = GetComponent<ShootingController>();
-        _experience = GetComponent<Experience>();
+        ShootingController = GetComponent<ShootingController>();
+        _respawnController = GetComponent<RespawnController>();
+        _health = GetComponent<Health>();
+        Experience = GetComponent<Experience>();
     }
 
 
-    private void ClampVelocity()
+    protected void ClampVelocity()
     {
         float x = Mathf.Clamp(rb.velocity.x, -maxVelocity, maxVelocity);
         float z = Mathf.Clamp(rb.velocity.z, -maxVelocity, maxVelocity);
@@ -47,9 +49,17 @@ public class ShipController : MonoBehaviour
 
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!other.CompareTag("Bullet") && !other.CompareTag("Explosion"))
+        {
+            _health.Kill(null);
+        }
+    }
+
     protected void ThrustForward(float amount)
     {
-        Vector3 force = transform.forward * (amount * accel);
+        Vector3 force = transform.forward * (Mathf.Clamp(amount, 0, 1) * accel);
 
         rb.AddForce(force);
     }
@@ -61,15 +71,16 @@ public class ShipController : MonoBehaviour
     
     protected IEnumerator BulletCooldown()
     {
-        _fireCooldown = true;
+        FireCooldown = true;
         yield return new WaitForSeconds(bulletCooldownTime);
-        _fireCooldown = false;
+        FireCooldown = false;
     }
     
     protected IEnumerator BombCooldown()
     {
-        _bombFireCooldown = true;
+        BombFireCooldown = true;
         yield return new WaitForSeconds(bombCooldownTime);
-        _bombFireCooldown = false;
+        BombFireCooldown = false;
     }
+
 }

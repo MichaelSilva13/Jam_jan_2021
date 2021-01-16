@@ -10,6 +10,8 @@ public class Health : MonoBehaviour
 
     private Collider _collider;
     private MeshRenderer _meshRenderer;
+    private RespawnController _respawnController;
+    private Rigidbody rb;
 
     public int Life
     {
@@ -34,6 +36,8 @@ public class Health : MonoBehaviour
         _experience = GetComponent<Experience>();
         _meshRenderer = GetComponentInChildren<MeshRenderer>();
         _collider = GetComponentInChildren<Collider>();
+        _respawnController = GetComponent<RespawnController>();
+        rb = GetComponent<Rigidbody>();
         life = MaxLife;
     }
 
@@ -58,7 +62,14 @@ public class Health : MonoBehaviour
             _experience.LevelUp();
             experience.Xp += 5;
         }
-        //TODO: Add respawn system
+
+        StartCoroutine(DeathAnim());
+    }
+
+    void Respawn()
+    {
+        gameObject.transform.position = _respawnController.GetFurthestRespawnBecon(gameObject);
+        life = maxLife;
     }
 
     IEnumerator Invinsibility()
@@ -74,6 +85,22 @@ public class Health : MonoBehaviour
 
         _meshRenderer.enabled = true;
         _collider.enabled = true;
+    }
+
+    IEnumerator DeathAnim()
+    {
+        rb.velocity = Vector3.zero;
+        _meshRenderer.enabled = false;
+        _collider.enabled = false;
+        GameObject explosion = GameObjectPoolController.Dequeue("BOOM").gameObject;
+        explosion.transform.position = transform.position;
+        explosion.SetActive(true);
+        explosion.GetComponent<ParticleSystem>().Play();
+        yield return new WaitForSeconds(2f);
+        GameObjectPoolController.Enqueue(explosion.GetComponent<Poolable>());
+        _meshRenderer.enabled = true;
+        _collider.enabled = true;
+        Respawn();
     }
 
 }
