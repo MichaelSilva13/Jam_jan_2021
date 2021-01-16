@@ -23,6 +23,7 @@ public class ShipController : MonoBehaviour
 
         ThrustForward(zAxis);
         Rotate(transform, xAxis * rotationSpeed);
+        ClampVelocity();
     }
 
 
