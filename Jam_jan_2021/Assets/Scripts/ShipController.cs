@@ -14,7 +14,9 @@ public class ShipController : MonoBehaviour
     public float accel = 3f;
 
     private ShootingController _shootingController;
-    
+
+    private RespawnController _respawnController;
+
     [SerializeField]
     private GameObject bullet, bomb;
     
@@ -30,6 +32,7 @@ public class ShipController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         _shootingController = GetComponent<ShootingController>();
+        _respawnController = GetComponent<RespawnController>();
         GameObjectPoolController.AddEntry(bulletKey, bullet, 10, 20);
         GameObjectPoolController.AddEntry(bombKey, bomb, 10, 20);
     }
@@ -49,6 +52,9 @@ public class ShipController : MonoBehaviour
         if (Input.GetButtonDown("Fire1") && !fireCooldown)
         {
             _shootingController.Shoot(bulletKey, bulletSpeed, BulletCooldown());
+
+            //REMOVE ME
+            Respawn();
         }
         
         if (Input.GetButtonDown("Fire2") && !bombFireCooldown)
@@ -91,5 +97,11 @@ public class ShipController : MonoBehaviour
         bombFireCooldown = true;
         yield return new WaitForSeconds(bombCooldownTime);
         bombFireCooldown = false;
+    }
+
+    private void Respawn()
+    {
+        gameObject.transform.position = _respawnController.GetFurthestRespawnBecon(gameObject);
+        rb.velocity = new Vector3(0, 0, 0);
     }
 }
