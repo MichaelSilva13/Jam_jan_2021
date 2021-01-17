@@ -8,6 +8,7 @@ TagManager:
   - Explosion
   - Enemy1
   - Enemy2
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -17,11 +18,11 @@ TagManager:
   - UI
   - 
   - 
-  - Bullet
-  - Bomb
   - Post Processing
-  - 
-  - 
+  - Player
+  - Enemy1
+  - Enemy2
+  - Explosion
   - 
   - 
   - 
