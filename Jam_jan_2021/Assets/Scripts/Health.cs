@@ -97,7 +97,6 @@ public class Health : MonoBehaviour
         float timer = 0;
         while (timer < invinsibilityTime)
         {
-            Debug.Log(_collider.enabled);
             _meshRenderer.enabled = !_meshRenderer.enabled;
             timer += blinkTime;
             yield return new WaitForSeconds(blinkTime);

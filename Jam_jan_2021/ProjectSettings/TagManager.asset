@@ -8,6 +8,7 @@ TagManager:
   - Explosion
   - Enemy1
   - Enemy2
+  - RespawnBeacon
   layers:
   - Default
   - TransparentFX

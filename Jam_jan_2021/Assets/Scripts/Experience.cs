@@ -14,6 +14,10 @@ public class Experience : MonoBehaviour
     [SerializeField]
     private int level;
 
+    public int speedLevel = 1;
+    public int fireRateLevel = 1;
+    public int damageLevel = 1;
+
     private ShipController _shipController;
 
     private Health _health;
@@ -38,7 +42,14 @@ public class Experience : MonoBehaviour
         set
         {
             kills = value;
-            _levelManager.killUp(this);
+            if(gameObject == GameObject.FindGameObjectWithTag("Player"))
+            {
+                _levelManager.killUp(this, true);
+            }
+            else
+            {
+                _levelManager.killUp(this, false);
+            }
         }
     }
 
@@ -55,12 +66,12 @@ public class Experience : MonoBehaviour
 
     private void BoostStat(int index)
     {
-        Debug.Log(index);
         switch (index)
         {
             case 0:
                 _shipController.accel += 5f;
                 _shipController.maxVelocity += 5f;
+                speedLevel++;
                 break;
             case 1:
                 _health.MaxLife += 5;
@@ -69,9 +80,11 @@ public class Experience : MonoBehaviour
             case 2:
                 _shipController.bulletCooldownTime *= 0.8f;
                 _shipController.bombCooldownTime *= 0.8f;
+                fireRateLevel++;
                 break;
             default:
                 _shipController.bulletDamage += 5;
+                damageLevel++;
                 break;
         }
     }
