@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class EnemySpaceshipController : MonoBehaviour
+public class EnemySpaceshipController : ShipController
 {
     private bool m_EnemyIsInShootingRange = false;
-    private bool m_FireCooldown;
 
     private ShootingController m_ShootingController;
     private Collider[] m_GameObjsInShootingRange;
@@ -14,18 +13,12 @@ public class EnemySpaceshipController : MonoBehaviour
     private Rigidbody rb;
 
     [SerializeField] private string enemyTag = "";
-    [SerializeField] private string bulletKey = "PlayerBullet";
     [SerializeField] private float shootingRangeSphereRadius = 10.0f;
     [SerializeField] private float playerOffsetSphereRadius = 5.0f;
-    [SerializeField] private float rotationSpeed = 0.5f;
-    [SerializeField] private float thrustAmount = 10.0f;
-    [SerializeField] private float maxVelocity = 3.0f;
-    [SerializeField] private float bulletCooldownTime = 0.5f;
-    [SerializeField] private float bulletSpeed = 10.0f;
 
-    // Start is called before the first frame update
-    void Start()
+    protected override void IntializeStuff()
     {
+        base.IntializeStuff();
         m_GameObjsInGame = new List<GameObject>(GameObject.FindGameObjectsWithTag(enemyTag).ToList());
         m_GameObjsInGame.Add(GameObject.FindGameObjectWithTag("Player"));
 
@@ -60,13 +53,13 @@ public class EnemySpaceshipController : MonoBehaviour
         float distance = (nearestEnemy.transform.position - gameObject.transform.position).magnitude;
 
         if (distance > playerOffsetSphereRadius)
-            ThrustForward(thrustAmount);
+            ThrustForward(accel);
 
         RotateTowardsNearestEnemy(nearestEnemy);
         ClampVelocity();
 
-        if (m_EnemyIsInShootingRange && !m_FireCooldown)
-            m_ShootingController.Shoot(bulletKey, bulletSpeed, BulletCooldown());
+        if (m_EnemyIsInShootingRange && !FireCooldown)
+            m_ShootingController.Shoot(bulletKey, bulletSpeed, BulletCooldown(), 5, Experience);
 
         if (distance <= playerOffsetSphereRadius)
         {
@@ -123,27 +116,9 @@ public class EnemySpaceshipController : MonoBehaviour
     private void RotateTowardsNearestEnemy(GameObject nearestEnemy)
     {
         Vector3 direction = (nearestEnemy.transform.position - transform.position).normalized;
+        direction = new Vector3(direction.x, 0, direction.z).normalized;
+        Debug.DrawRay(transform.position, direction * 10f, Color.red);
         Quaternion lookRotation = Quaternion.LookRotation(direction);
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
-    }
-
-    private void ThrustForward(float amount)
-    {
-        Vector3 force = transform.forward * amount;
-        rb.AddForce(force);
-    }
-
-    private void ClampVelocity()
-    {
-        float x = Mathf.Clamp(rb.velocity.x, -maxVelocity, maxVelocity);
-        float z = Mathf.Clamp(rb.velocity.z, -maxVelocity, maxVelocity);
-        rb.velocity = new Vector3(x, rb.velocity.y, z);
-    }
-
-    IEnumerator BulletCooldown()
-    {
-        m_FireCooldown = true;
-        yield return new WaitForSeconds(bulletCooldownTime);
-        m_FireCooldown = false;
     }
 }

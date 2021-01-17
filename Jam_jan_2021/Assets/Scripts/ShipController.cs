@@ -36,13 +36,18 @@ public class ShipController : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        IntializeStuff();
+        // 
+    }
+
+    protected virtual void IntializeStuff()
+    {
         rb = GetComponent<Rigidbody>();
         _audioSource = GetComponent<AudioSource>();
         ShootingController = GetComponent<ShootingController>();
         _respawnController = GetComponent<RespawnController>();
         Health = GetComponent<Health>();
         Experience = GetComponent<Experience>();
-        bombImage = GameObject.Find("Bomb Image Filler").GetComponent<Image>();
     }
 
     private void Update()

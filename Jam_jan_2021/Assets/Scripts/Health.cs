@@ -49,14 +49,15 @@ public class Health : MonoBehaviour
         _respawnController = GetComponent<RespawnController>();
         rb = GetComponent<Rigidbody>();
         life = MaxLife;
-        healthBar.SetMaxHealth(life);
+        if(healthBar)
+            healthBar.SetMaxHealth(life);
     }
 
     public void Damage(int value, Experience experience)
     {
         life -= value;
-        healthBar.SetHealth(life);
-        Debug.Log(life);
+        if(healthBar)
+            healthBar.SetHealth(life);
         if (life <= 0)
         {
             Kill(experience);
@@ -85,7 +86,8 @@ public class Health : MonoBehaviour
         Dead = false;
         gameObject.transform.position = _respawnController.GetFurthestRespawnBecon(gameObject);
         life = maxLife;
-        healthBar.SetMaxHealth(life);
+        if(healthBar)
+            healthBar.SetMaxHealth(life);
     }
 
     IEnumerator Invinsibility()
@@ -94,6 +96,7 @@ public class Health : MonoBehaviour
         float timer = 0;
         while (timer < invinsibilityTime)
         {
+            Debug.Log(_collider.enabled);
             _meshRenderer.enabled = !_meshRenderer.enabled;
             timer += blinkTime;
             yield return new WaitForSeconds(blinkTime);

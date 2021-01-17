@@ -123,25 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &74799947 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 204327957491584173, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
+--- !u!82 &74799949 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 1005122148, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
   m_PrefabInstance: {fileID: 540635501}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &74799951
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 74799947}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -2432090755550338912, guid: 7e57f5d12a01e964e9870e655dd16156, type: 3}
 --- !u!1001 &540635501
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -149,13 +135,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1860017422, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
+      propertyPath: _audioSource
+      value: 
+      objectReference: {fileID: 74799949}
+    - target: {fileID: 1860017422, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
+      propertyPath: invinsibilityTime
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 204327957491584173, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8329769251321530129, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
       propertyPath: m_Constraints
-      value: 80
+      value: 116
       objectReference: {fileID: 0}
     - target: {fileID: 8364293352763731662, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -382,6 +376,61 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90.75598, y: 0, z: 0}
+--- !u!1 &1088293232
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1088293234}
+  - component: {fileID: 1088293233}
+  m_Layer: 0
+  m_Name: SpawnObjects
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1088293233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1088293232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd57ca50e05c5da479366f2cba1ff854, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabs:
+  - {fileID: 1866617448417379247, guid: 4dc4aa4276485fc499a17246eb436345, type: 3}
+  - {fileID: 8749616435376497584, guid: e0ce251627af37247a56f50961916e4b, type: 3}
+  - {fileID: 2312591318274358134, guid: 77da29788f3010e4396994ea52057980, type: 3}
+  keys:
+  - Bullet
+  - Bomb
+  - BOOM
+  ranges:
+  - {x: 10, y: 20}
+  - {x: 10, y: 20}
+  - {x: 3, y: 5}
+--- !u!4 &1088293234
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1088293232}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.059999943, y: 0.63100004, z: -0.06999993}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1133879542 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 204327957491584173, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
@@ -412,9 +461,13 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Enemy1
       objectReference: {fileID: 0}
+    - target: {fileID: 204327957491584173, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
+      propertyPath: m_Name
+      value: default2
+      objectReference: {fileID: 0}
     - target: {fileID: 8329769251321530129, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
       propertyPath: m_Constraints
-      value: 80
+      value: 116
       objectReference: {fileID: 0}
     - target: {fileID: 8364293352763731662, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -422,7 +475,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8364293352763731662, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.28
       objectReference: {fileID: 0}
     - target: {fileID: 8364293352763731662, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
       propertyPath: m_LocalPosition.z
@@ -460,16 +513,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8697553356223792090, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
+      propertyPath: enemyTag1
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 9176120325238486132, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
       propertyPath: m_Name
       value: RedFighter_Enemy_Type1
       objectReference: {fileID: 0}
     - target: {fileID: 9176120325238486132, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
       propertyPath: m_TagString
-      value: Enemy1
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 394743222, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
+    - {fileID: 1860017418, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
+    - {fileID: 623913564, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
 --- !u!1 &1197117871 stripped
 GameObject:
@@ -488,15 +547,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88a448fbd7c260b4e9603172a87c174f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxVelocity: 20
+  rotationSpeed: 2
+  accel: 10
+  bulletDamage: 0
+  bulletCooldownTime: 1
+  bulletSpeed: 75
+  bombCooldownTime: 5
+  bombSpeed: 75
+  bulletKey: Bullet
+  bombKey: Bomb
   enemyTag: Enemy2
   shootingRangeSphereRadius: 30
   playerOffsetSphereRadius: 20
-  rotationSpeed: 2
-  thrustAmount: 10
-  maxVelocity: 20
-  bulletCooldownTime: 0.5
-  bulletSpeed: 10
-  bulletKey: PlayerBullet
 --- !u!1001 &1613490084
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -508,9 +571,13 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Enemy2
       objectReference: {fileID: 0}
+    - target: {fileID: 204327957491584173, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
+      propertyPath: m_Name
+      value: default1
+      objectReference: {fileID: 0}
     - target: {fileID: 8329769251321530129, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
       propertyPath: m_Constraints
-      value: 80
+      value: 116
       objectReference: {fileID: 0}
     - target: {fileID: 8364293352763731662, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -518,7 +585,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8364293352763731662, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8364293352763731662, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
       propertyPath: m_LocalPosition.z
@@ -556,6 +623,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8697553356223792090, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
+      propertyPath: enemyTag2
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 9176120325238486132, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
       propertyPath: m_Name
       value: RedFighter_Enemy_Type2
@@ -564,17 +635,17 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Enemy2
       objectReference: {fileID: 0}
+    - target: {fileID: 9176120325238486132, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 394743222, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
+    - {fileID: 1860017418, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
 --- !u!1 &1613490085 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9176120325238486132, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
-  m_PrefabInstance: {fileID: 1613490084}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1613490086 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 204327957491584173, guid: 627a5b72532c44047b0b936c5bbdffcf, type: 3}
   m_PrefabInstance: {fileID: 1613490084}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1613490087
@@ -589,26 +660,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88a448fbd7c260b4e9603172a87c174f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxVelocity: 45
+  rotationSpeed: 2
+  accel: 10
+  bulletDamage: 0
+  bulletCooldownTime: 1.5
+  bulletSpeed: 75
+  bombCooldownTime: 5
+  bombSpeed: 75
+  bulletKey: Bullet
+  bombKey: Bomb
   enemyTag: Enemy1
   shootingRangeSphereRadius: 30
   playerOffsetSphereRadius: 20
-  rotationSpeed: 2
-  thrustAmount: 10
-  maxVelocity: 20
-  bulletCooldownTime: 0.5
-  bulletSpeed: 10
-  bulletKey: PlayerBullet
---- !u!64 &1613490088
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1613490086}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -2432090755550338912, guid: 7e57f5d12a01e964e9870e655dd16156, type: 3}
