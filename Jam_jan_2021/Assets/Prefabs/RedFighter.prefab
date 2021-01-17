@@ -1557,7 +1557,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a4d9e3bc4ed1154d94ac9c630388cf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xp: 10
+  xp: 0
   level: 0
   _textMesh: {fileID: 39364237}
   lvlUpText: {fileID: 1708853992}
