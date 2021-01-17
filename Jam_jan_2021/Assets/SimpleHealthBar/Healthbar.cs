@@ -43,7 +43,7 @@ public class Healthbar : MonoBehaviour {
     public Color mediumHealthColor = new Color(0.9450285f, 1f, 0.4481132f);
     public Color lowHealthColor = new Color(1f, 0.259434f, 0.259434f);
 
-    private void Start()
+    private void Awake()
     {
         // If the healthbar hasn't already been assigned, then automatically assign it.
         if (healthbarDisplay == null)

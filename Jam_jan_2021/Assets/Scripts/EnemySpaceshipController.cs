@@ -32,7 +32,8 @@ public class EnemySpaceshipController : ShipController
         if (m_GameObjsInGame == null)
             return;
 
-        m_GameObjsInShootingRange = Physics.OverlapSphere(gameObject.transform.position, shootingRangeSphereRadius);
+        int maskCircle = LayerMask.GetMask("Player", "Enemy1", "Enemy2");
+        m_GameObjsInShootingRange = Physics.OverlapSphere(gameObject.transform.position, shootingRangeSphereRadius, maskCircle);
 
         GameObject nearestEnemy = null;
 
@@ -50,12 +51,33 @@ public class EnemySpaceshipController : ShipController
         if (nearestEnemy == null)
             return;
 
+        int layerMask = LayerMask.GetMask("Wall");
+        RaycastHit hit1, hit2;
+        Vector3 direction = (nearestEnemy.transform.position - transform.position).normalized;
+        if (Physics.Raycast(transform.position, transform.forward, 
+            out hit1, shootingRangeSphereRadius + 20, layerMask))
+        {
+            bool xNeg = direction.x < 0;
+            bool zNeg = direction.z < 0;
+            int dirr = 1;
+            if (xNeg == zNeg)
+            {
+                dirr = -1;
+            }
+
+            Rotate(transform, rotationSpeed * 15f * dirr);
+        }
+        else if(!Physics.Raycast(transform.position, direction, 
+            out hit2, shootingRangeSphereRadius + 20, layerMask))
+        {
+            RotateTowardsNearestEnemy(nearestEnemy);
+        }
+        
         float distance = (nearestEnemy.transform.position - gameObject.transform.position).magnitude;
 
         if (distance > playerOffsetSphereRadius)
             ThrustForward(accel);
-
-        RotateTowardsNearestEnemy(nearestEnemy);
+        
         ClampVelocity();
 
         if (m_EnemyIsInShootingRange && !FireCooldown)
