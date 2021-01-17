@@ -75,6 +75,7 @@ public class Health : MonoBehaviour
         {
             _experience.LevelUp();
             experience.Xp += 5;
+            experience.Kills++;
         }
 
         Dead = true;
