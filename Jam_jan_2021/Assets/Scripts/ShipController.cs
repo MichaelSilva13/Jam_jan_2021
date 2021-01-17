@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class ShipController : MonoBehaviour
 {
     private Rigidbody rb;
+    private AudioSource _audioSource;
 
     public float maxVelocity = 45f;
 
@@ -30,17 +31,23 @@ public class ShipController : MonoBehaviour
 
     protected Experience Experience;
 
-    private Health _health;
+    protected Health Health;
 
     // Start is called before the first frame update
     private void Start()
     {
+        IntializeStuff();
+        // 
+    }
+
+    protected virtual void IntializeStuff()
+    {
         rb = GetComponent<Rigidbody>();
+        _audioSource = GetComponent<AudioSource>();
         ShootingController = GetComponent<ShootingController>();
         _respawnController = GetComponent<RespawnController>();
-        _health = GetComponent<Health>();
+        Health = GetComponent<Health>();
         Experience = GetComponent<Experience>();
-        bombImage = GameObject.Find("Bomb Image Filler").GetComponent<Image>();
     }
 
     private void Update()
@@ -57,6 +64,7 @@ public class ShipController : MonoBehaviour
         float z = Mathf.Clamp(rb.velocity.z, -maxVelocity, maxVelocity);
 
         rb.velocity = new Vector3(x, rb.velocity.y, z);
+        _audioSource.volume = (rb.velocity.magnitude / maxVelocity)/2f;
 
     }
 
@@ -64,7 +72,7 @@ public class ShipController : MonoBehaviour
     {
         if (!other.CompareTag("Bullet") && !other.CompareTag("Explosion"))
         {
-            _health.Kill(null);
+            Health.Kill(null);
         }
     }
 

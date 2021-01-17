@@ -7,6 +7,7 @@ public class Explosion : MonoBehaviour
 {
     public ParticleSystem part;
     private SphereCollider _collider;
+    private AudioSource _audioSource;
     
     private Experience user;
 
@@ -27,6 +28,7 @@ public class Explosion : MonoBehaviour
         if(!_collider)
             _collider = GetComponent<SphereCollider>();
         _collider.enabled = false;
+        _audioSource = GetComponentInChildren<AudioSource>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -45,6 +47,7 @@ public class Explosion : MonoBehaviour
 
     public IEnumerator explode()
     {
+        _audioSource.Play();
         _collider.enabled = true;
         float targetRadius = 20f, currRadius = 0f;
         float time = 0.0f;
