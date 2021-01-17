@@ -9,6 +9,7 @@ public class ShootingController : MonoBehaviour
     {
         StartCoroutine(routine);
         GameObject proj = GameObjectPoolController.Dequeue(projKey).gameObject;
+        proj.layer = gameObject.layer;
         Projectile projectile = proj.GetComponent<Projectile>();
         projectile.Damage = damage;
         projectile.User = source;

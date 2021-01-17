@@ -41,7 +41,6 @@ public class Explosion : MonoBehaviour
         if (otherHealth)
         {
             otherHealth.Damage(Damage, user);
-            user.Xp++;
         }
     }
 

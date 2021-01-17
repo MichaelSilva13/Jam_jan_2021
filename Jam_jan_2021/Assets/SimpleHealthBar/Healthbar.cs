@@ -43,7 +43,7 @@ public class Healthbar : MonoBehaviour {
     public Color mediumHealthColor = new Color(0.9450285f, 1f, 0.4481132f);
     public Color lowHealthColor = new Color(1f, 0.259434f, 0.259434f);
 
-    private void Start()
+    private void Awake()
     {
         // If the healthbar hasn't already been assigned, then automatically assign it.
         if (healthbarDisplay == null)
@@ -76,14 +76,8 @@ public class Healthbar : MonoBehaviour {
             health = maximumHealth;
         }
 
-        // If the character's health is not full and the health regeneration button is ticked, regenerate health/sec at the rate of 'healthPerSecond':
-        if (health < maximumHealth && regenerateHealth)
-        {
-            health += healthPerSecond * Time.deltaTime;
-
-            // Each time the health is changed, update it visibly:
-            UpdateHealth();
-        }
+        UpdateHealth();
+       
     }
 
     // Set the health bar to display the same health value as the health variable:
@@ -146,7 +140,11 @@ public class Healthbar : MonoBehaviour {
         maximumHealth = maxHP;
         lowHealth = Mathf.RoundToInt(maximumHealth / 3.0f);
         highHealth = Mathf.RoundToInt(2 * (maximumHealth / 3.0f));
-        health = maximumHealth;
+        if (healthbarDisplay == null)
+        {
+            healthbarDisplay = GetComponent<Slider>();
+        }
+        SetHealth(maximumHealth);
         healthbarDisplay.maxValue = maximumHealth;
         Text text = GameObject.Find("HealthText").GetComponent<Text>();
         text.text = health + " / " + maximumHealth;

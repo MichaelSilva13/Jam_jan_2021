@@ -24,6 +24,7 @@ public class ShipController : MonoBehaviour
     public float bulletCooldownTime = 0.15f, bulletSpeed = 75f, bombCooldownTime = 5f, bombSpeed = 75f;
     protected bool FireCooldown, BombFireCooldown;
 
+    [SerializeField]
     private Image bombImage;
 
     [SerializeField]
@@ -48,6 +49,7 @@ public class ShipController : MonoBehaviour
         _respawnController = GetComponent<RespawnController>();
         Health = GetComponent<Health>();
         Experience = GetComponent<Experience>();
+        bombImage = GameObject.Find("Bomb Image Filler").GetComponent<Image>();
     }
 
     private void Update()
@@ -68,13 +70,22 @@ public class ShipController : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision other)
+    {
+        if (!other.gameObject.CompareTag("Bullet") && !other.gameObject.CompareTag("Explosion") 
+                                                   && !other.gameObject.CompareTag("Wall"))
+        {
+            Health.Kill(null);
+        }
+    }
+
+    /*private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Bullet") && !other.CompareTag("Explosion"))
         {
             Health.Kill(null);
         }
-    }
+    }*/
 
     protected void ThrustForward(float amount)
     {

@@ -57,10 +57,7 @@ public class Bullet : Projectile
         if (otherHealth)
         {
             otherHealth.Damage(Damage, user);
-            if (otherHealth.Life <= 0)
-            {
-                user.Xp+=5;
-            }
+            
         }
         StopCoroutine(SDCoroutine);
         StartCoroutine(Sparks());

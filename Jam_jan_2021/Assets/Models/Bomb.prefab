@@ -36,7 +36,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7530354079619362146}
   - component: {fileID: 6233488320549313930}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Audio Source
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 8749616435376497585}
   - component: {fileID: 7371002506709635871}
   - component: {fileID: 5209535639412497086}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Bomb
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -193,7 +193,7 @@ Transform:
   m_GameObject: {fileID: 8749616435376497584}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.7402232, y: 0.60005236, z: 3.1017785}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 2051850868709977657}
   m_Father: {fileID: 0}
@@ -276,7 +276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f38cf81185aa66344b00800a09c8e7cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sdTime: 2
+  sdTime: 1
   explosionTime: 5
 --- !u!65 &7371002506709635871
 BoxCollider:
@@ -459,6 +459,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3123075737211501169, guid: a3f72d5f213bb7d458dfc2c4369e7acf, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3123075737211501169, guid: a3f72d5f213bb7d458dfc2c4369e7acf, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3123075737211501169, guid: a3f72d5f213bb7d458dfc2c4369e7acf, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3123075737211501182, guid: a3f72d5f213bb7d458dfc2c4369e7acf, type: 3}
       propertyPath: m_Name
       value: CosmicReversal
@@ -557,7 +569,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3123075738692241926, guid: a3f72d5f213bb7d458dfc2c4369e7acf, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 3123075738692241926, guid: a3f72d5f213bb7d458dfc2c4369e7acf, type: 3}
       propertyPath: m_TagString

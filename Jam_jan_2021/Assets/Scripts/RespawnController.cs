@@ -50,7 +50,7 @@ public class RespawnController : MonoBehaviour
             }
         }
 
-        return furthestBeacon.transform.position;
+        return  new Vector3(furthestBeacon.transform.position.x, 0, furthestBeacon.transform.position.z);
 
     }
 }

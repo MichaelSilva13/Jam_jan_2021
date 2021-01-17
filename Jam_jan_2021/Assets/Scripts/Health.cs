@@ -73,8 +73,9 @@ public class Health : MonoBehaviour
         _audioSource.Play();
         if (experience && experience != _experience)
         {
+            _experience.Xp += 5;
             _experience.LevelUp();
-            experience.Xp += 5;
+            experience.Xp += 10;
             experience.Kills++;
         }
 
@@ -97,7 +98,6 @@ public class Health : MonoBehaviour
         float timer = 0;
         while (timer < invinsibilityTime)
         {
-            Debug.Log(_collider.enabled);
             _meshRenderer.enabled = !_meshRenderer.enabled;
             timer += blinkTime;
             yield return new WaitForSeconds(blinkTime);
