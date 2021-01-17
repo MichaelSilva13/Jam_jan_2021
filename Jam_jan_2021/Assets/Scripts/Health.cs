@@ -21,6 +21,8 @@ public class Health : MonoBehaviour
     private RespawnController _respawnController;
     private Rigidbody rb;
 
+    public Healthbar healthBar;
+
     public int Life
     {
         get => life;
@@ -47,11 +49,13 @@ public class Health : MonoBehaviour
         _respawnController = GetComponent<RespawnController>();
         rb = GetComponent<Rigidbody>();
         life = MaxLife;
+        healthBar.SetMaxHealth(life);
     }
 
     public void Damage(int value, Experience experience)
     {
         life -= value;
+        healthBar.SetHealth(life);
         Debug.Log(life);
         if (life <= 0)
         {
@@ -81,6 +85,7 @@ public class Health : MonoBehaviour
         Dead = false;
         gameObject.transform.position = _respawnController.GetFurthestRespawnBecon(gameObject);
         life = maxLife;
+        healthBar.SetMaxHealth(life);
     }
 
     IEnumerator Invinsibility()

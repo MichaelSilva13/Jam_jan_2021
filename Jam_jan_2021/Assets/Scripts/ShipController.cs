@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShipController : MonoBehaviour
 {
@@ -23,6 +24,8 @@ public class ShipController : MonoBehaviour
     public float bulletCooldownTime = 0.15f, bulletSpeed = 75f, bombCooldownTime = 5f, bombSpeed = 75f;
     protected bool FireCooldown, BombFireCooldown;
 
+    private Image bombImage;
+
     [SerializeField]
     protected string bulletKey = "Bullet", bombKey = "Bomb";
 
@@ -39,8 +42,16 @@ public class ShipController : MonoBehaviour
         _respawnController = GetComponent<RespawnController>();
         Health = GetComponent<Health>();
         Experience = GetComponent<Experience>();
+        bombImage = GameObject.Find("Bomb Image Filler").GetComponent<Image>();
     }
 
+    private void Update()
+    {
+        if (BombFireCooldown)
+        {
+            bombImage.fillAmount -= 1 / bombCooldownTime * Time.deltaTime;
+        }
+    }
 
     protected void ClampVelocity()
     {
@@ -82,8 +93,10 @@ public class ShipController : MonoBehaviour
     protected IEnumerator BombCooldown()
     {
         BombFireCooldown = true;
+        bombImage.fillAmount = 1;
         yield return new WaitForSeconds(bombCooldownTime);
         BombFireCooldown = false;
+        bombImage.fillAmount = 0;
     }
 
 }
