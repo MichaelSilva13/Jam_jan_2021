@@ -49,6 +49,7 @@ public class ShipController : MonoBehaviour
         _respawnController = GetComponent<RespawnController>();
         Health = GetComponent<Health>();
         Experience = GetComponent<Experience>();
+        bombImage = GameObject.Find("Bomb Image Filler").GetComponent<Image>();
     }
 
     private void Update()

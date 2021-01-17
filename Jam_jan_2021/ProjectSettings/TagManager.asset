@@ -9,6 +9,7 @@ TagManager:
   - Enemy1
   - Enemy2
   - Wall
+  - RespawnBeacon
   layers:
   - Default
   - TransparentFX
