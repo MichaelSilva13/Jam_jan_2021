@@ -62,7 +62,6 @@ public class Bullet : Projectile
                 user.Xp+=5;
             }
         }
-        Debug.Log(otherHealth);
         StopCoroutine(SDCoroutine);
         StartCoroutine(Sparks());
     }
