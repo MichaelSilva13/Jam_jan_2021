@@ -14,10 +14,16 @@ public class Experience : MonoBehaviour
     [SerializeField]
     private int level;
 
+    [SerializeField]
+    private TextMesh _textMesh;
+
     private ShipController _shipController;
 
     private Health _health;
     private LevelManager _levelManager;
+
+    [SerializeField]
+    private AudioSource xpUpSound, lvlUpSound;
 
     private void Start()
     {
@@ -29,7 +35,12 @@ public class Experience : MonoBehaviour
     public int Xp
     {
         get => xp;
-        set => xp = value;
+        set
+        {
+            if(CompareTag("Player"))
+                StartCoroutine(ShowXpText(value));
+            xp = value;
+        }
     }
 
     public int Kills
@@ -37,8 +48,8 @@ public class Experience : MonoBehaviour
         get => kills;
         set
         {
-            kills = value;
             _levelManager.killUp(this);
+            kills = value;
         }
     }
 
@@ -48,6 +59,7 @@ public class Experience : MonoBehaviour
     {
         while (xp > xpLevel[level])
         {
+            lvlUpSound.Play();
             level++;
             BoostStat(Random.Range(0, 4));
         }
@@ -55,7 +67,6 @@ public class Experience : MonoBehaviour
 
     private void BoostStat(int index)
     {
-        Debug.Log(index);
         switch (index)
         {
             case 0:
@@ -74,5 +85,14 @@ public class Experience : MonoBehaviour
                 _shipController.bulletDamage += 5;
                 break;
         }
+    }
+
+    IEnumerator ShowXpText(int value)
+    {
+        xpUpSound.Play();
+        int gain = value - xp;
+        _textMesh.text = "+" + gain + "xp";
+        yield return new WaitForSeconds(2f);
+        _textMesh.text = "";
     }
 }
