@@ -9,17 +9,21 @@ public class Experience : MonoBehaviour
     [SerializeField]
     private int xp;
 
+    private int kills;
+
     [SerializeField]
     private int level;
 
     private ShipController _shipController;
 
     private Health _health;
+    private LevelManager _levelManager;
 
     private void Start()
     {
         _shipController = GetComponent<ShipController>();
         _health = GetComponent<Health>();
+        _levelManager = FindObjectOfType<LevelManager>();
     }
 
     public int Xp
@@ -28,8 +32,17 @@ public class Experience : MonoBehaviour
         set => xp = value;
     }
 
+    public int Kills
+    {
+        get => kills;
+        set
+        {
+            kills = value;
+            _levelManager.killUp(this);
+        }
+    }
+
     public List<int> xpLevel;
-    // Start is called before the first frame update
 
     public void LevelUp()
     {
