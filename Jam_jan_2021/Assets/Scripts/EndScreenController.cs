@@ -35,7 +35,7 @@ public class EndScreenController : MonoBehaviour
 
     private void ClickPlayAgain()
     {
-        //SceneManager.LoadScene(2);
+        SceneManager.LoadScene(2);
     }
 
     private void ClickExit()

@@ -1491,7 +1491,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!114 &8329769251321530134
 MonoBehaviour:
@@ -1561,9 +1561,13 @@ MonoBehaviour:
   level: 0
   _textMesh: {fileID: 39364237}
   lvlUpText: {fileID: 1708853992}
+  speedLevel: 1
+  fireRateLevel: 1
+  damageLevel: 1
+  _levelManager: {fileID: 0}
   xpUpSound: {fileID: 39364239}
   lvlUpSound: {fileID: 1783257670}
-  xpLevel: 0a000000140000001e00000028000000320000003c00000046000000500000005a0000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000
+  xpLevel: 0a000000140000001e00000028000000320000003c00000046000000500000005a00000064000000
 --- !u!114 &8697553356223792090
 MonoBehaviour:
   m_ObjectHideFlags: 0

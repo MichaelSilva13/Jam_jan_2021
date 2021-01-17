@@ -14,7 +14,7 @@ public class LevelManager : MonoBehaviour
 
     public void killUp(Experience e, bool isPlayer)
     {
-        if (e.Kills > killThreshold)
+        if (e.Kills >= killThreshold)
         {
             playerVictory = isPlayer;
             if (isPlayer)

@@ -21,7 +21,7 @@ public class MainMenuManager : MonoBehaviour
 
     private void ClickPlay()
     {
-        //SceneManager.LoadScene(2);
+        SceneManager.LoadScene(2);
     }
 
     private void ClickExit()

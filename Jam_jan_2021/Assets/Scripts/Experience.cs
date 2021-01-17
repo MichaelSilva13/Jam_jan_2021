@@ -69,7 +69,7 @@ public class Experience : MonoBehaviour
     public void LevelUp()
     {
         bool levelUp = false;
-        while (xp >= xpLevel[level])
+        while (level < xpLevel.Count && xp >= xpLevel[level])
         {
             level++;
             BoostStat(Random.Range(0, 4));
@@ -85,21 +85,21 @@ public class Experience : MonoBehaviour
         switch (index)
         {
             case 0:
-                _shipController.accel += 5f;
-                _shipController.maxVelocity += 5f;
+                _shipController.accel += 10f;
+                _shipController.maxVelocity += 10f;
                 speedLevel++;
                 break;
             case 1:
-                _health.MaxLife += 5;
+                _health.MaxLife += 10;
                 _health.Life = _health.MaxLife;
                 break;
             case 2:
-                _shipController.bulletCooldownTime *= 0.8f;
-                _shipController.bombCooldownTime *= 0.8f;
+                _shipController.bulletCooldownTime *= 0.75f;
+                _shipController.bombCooldownTime *= 0.75f;
                 fireRateLevel++;
                 break;
             default:
-                _shipController.bulletDamage += 5;
+                _shipController.bulletDamage += 10;
                 damageLevel++;
                 break;
         }

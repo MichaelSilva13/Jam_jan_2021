@@ -86,7 +86,8 @@ public class Health : MonoBehaviour
     void Respawn()
     {
         Dead = false;
-        gameObject.transform.position = _respawnController.GetFurthestRespawnBecon(gameObject);
+        transform.position = _respawnController.GetFurthestRespawnBecon(gameObject);
+        transform.LookAt(Vector3.zero);
         life = maxLife;
         if(healthBar)
             healthBar.SetMaxHealth(life);

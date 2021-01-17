@@ -101,9 +101,13 @@ MonoBehaviour:
   level: 0
   _textMesh: {fileID: 0}
   lvlUpText: {fileID: 0}
+  speedLevel: 1
+  fireRateLevel: 1
+  damageLevel: 1
+  _levelManager: {fileID: 0}
   xpUpSound: {fileID: 0}
   lvlUpSound: {fileID: 0}
-  xpLevel: 050000000a0000000f00000014000000
+  xpLevel: 0a000000140000001e00000028000000320000003c00000046000000500000005a00000064000000
 --- !u!114 &2989512812790544560
 MonoBehaviour:
   m_ObjectHideFlags: 0

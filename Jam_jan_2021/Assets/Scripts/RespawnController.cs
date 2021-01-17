@@ -13,7 +13,7 @@ public class RespawnController : MonoBehaviour
     public string enemyTag2;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         m_GameObjsInGame = new List<GameObject>();
         m_GameObjsInGame.Add(GameObject.FindGameObjectWithTag(enemyTag1));
