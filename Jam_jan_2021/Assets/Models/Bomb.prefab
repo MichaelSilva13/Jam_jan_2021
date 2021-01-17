@@ -36,7 +36,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7530354079619362146}
   - component: {fileID: 6233488320549313930}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Audio Source
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 8749616435376497585}
   - component: {fileID: 7371002506709635871}
   - component: {fileID: 5209535639412497086}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Bomb
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -557,7 +557,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3123075738692241926, guid: a3f72d5f213bb7d458dfc2c4369e7acf, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 3123075738692241926, guid: a3f72d5f213bb7d458dfc2c4369e7acf, type: 3}
       propertyPath: m_TagString
