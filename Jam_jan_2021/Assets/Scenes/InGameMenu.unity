@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d45f58b7d60df940a74f8b310781af6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  killThreshold: 0
+  killThreshold: 3
 --- !u!4 &34326792
 Transform:
   m_ObjectHideFlags: 0

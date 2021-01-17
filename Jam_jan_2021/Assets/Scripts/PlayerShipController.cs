@@ -39,6 +39,7 @@ public class PlayerShipController : ShipController
     {
         if (Input.GetButtonDown("Fire1") && !FireCooldown && !Health.Dead)
         {
+            Experience.Kills++;
             ShootingController.Shoot(bulletKey, bulletSpeed, BulletCooldown(), bulletDamage, Experience);
         }
         

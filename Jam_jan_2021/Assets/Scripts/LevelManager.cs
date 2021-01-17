@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -8,10 +9,14 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField]
     private int killThreshold;
+
+    public static bool playerVictory;
+
     public void killUp(Experience e, bool isPlayer)
     {
         if (e.Kills > killThreshold)
         {
+            playerVictory = isPlayer;
             if (isPlayer)
             {
                 Debug.Log("GAGNÉ!!");
@@ -20,7 +25,7 @@ public class LevelManager : MonoBehaviour
             {
                 Debug.Log("Lol loser");
             }
-            
+            SceneManager.LoadScene(1);
         }
     }
 }

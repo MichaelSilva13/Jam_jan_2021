@@ -24,7 +24,7 @@ public class Experience : MonoBehaviour
     private ShipController _shipController;
 
     private Health _health;
-    private LevelManager _levelManager;
+    public LevelManager _levelManager;
 
     [SerializeField]
     private AudioSource xpUpSound, lvlUpSound;
