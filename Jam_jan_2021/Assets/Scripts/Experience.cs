@@ -15,7 +15,7 @@ public class Experience : MonoBehaviour
     private int level;
 
     [SerializeField]
-    private TextMesh _textMesh;
+    private TextMesh _textMesh, lvlUpText;
 
     private ShipController _shipController;
 
@@ -57,12 +57,16 @@ public class Experience : MonoBehaviour
 
     public void LevelUp()
     {
-        while (xp > xpLevel[level])
+        bool levelUp = false;
+        while (xp >= xpLevel[level])
         {
-            lvlUpSound.Play();
             level++;
             BoostStat(Random.Range(0, 4));
+            levelUp = true;
         }
+
+        if (levelUp && lvlUpText)
+            StartCoroutine(ShowLvlUpText());
     }
 
     private void BoostStat(int index)
@@ -93,6 +97,14 @@ public class Experience : MonoBehaviour
         int gain = value - xp;
         _textMesh.text = "+" + gain + "xp";
         yield return new WaitForSeconds(2f);
+        _textMesh.text = "";
+    }
+
+    IEnumerator ShowLvlUpText()
+    {
+        lvlUpSound.Play();
+        _textMesh.text = "LVL UP!";
+        yield return new WaitForSeconds(3f);
         _textMesh.text = "";
     }
 }

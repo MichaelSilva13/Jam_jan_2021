@@ -73,6 +73,7 @@ public class Health : MonoBehaviour
         _audioSource.Play();
         if (experience && experience != _experience)
         {
+            _experience.Xp += 5;
             _experience.LevelUp();
             experience.Xp += 10;
             experience.Kills++;
